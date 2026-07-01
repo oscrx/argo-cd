@@ -1,0 +1,63 @@
+apiVersion: stackgres.io/v1
+kind: SGCluster
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: '5'
+    meta.helm.sh/release-name: infra-devl-stackgres-db
+    meta.helm.sh/release-namespace: infra-devl-stackgres
+  labels:
+    app.kubernetes.io/instance: infra-devl-stackgres-db
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: na-stackgres-cluster
+    app.kubernetes.io/version: 1.15.2
+    helm.sh/chart: na-stackgres-cluster-1.15.2-4
+  name: infra-devl-stackgres-db
+  namespace: infra-devl-stackgres
+spec:
+  configurations:
+    backups:
+      - compression: brotli
+        fastVolumeSnapshot: false
+        reconciliationTimeout: 300
+        retention: 8
+        sgObjectStorage: infra-devl-stackgres-db
+        useVolumeSnapshot: false
+    observability:
+      prometheusAutobind: false
+  instances: 3
+  managedSql:
+    scripts:
+      - id: 0
+        sgScript: infra-devl-stackgres-db-default
+      - id: 1
+        sgScript: infra-devl-stackgres-db
+  pods:
+    persistentVolume:
+      size: 7Gi
+  postgres:
+    extensions:
+      - name: pg_trgm
+    ssl:
+      certificateSecretKeySelector:
+        key: tls.crt
+        name: infra-devl-stackgres-db-db-certs
+      enabled: true
+      privateKeySecretKeySelector:
+        key: tls.key
+        name: infra-devl-stackgres-db-db-certs
+    version: '17.4'
+  postgresServices:
+    primary:
+      enabled: true
+      type: ClusterIP
+    replicas:
+      enabled: true
+      type: ClusterIP
+  replication:
+    initialization:
+      backupNewerThan: PT23H
+      mode: FromExistingBackup
+    mode: strict-sync-all
+    role: ha-read
+    syncInstances: 3
+  sgInstanceProfile: infra-devl-stackgres-db-size-s

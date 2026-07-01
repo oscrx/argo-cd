@@ -1,0 +1,21 @@
+tests:
+- healthStatus:
+    status: Progressing
+    message: Unknown status
+  inputPath: testdata/fresh.yaml
+- healthStatus:
+    status: Progressing
+    message: Backup is not yet started
+  inputPath: testdata/pending.yaml
+- healthStatus:
+    status: Progressing
+    message: Backup is running
+  inputPath: testdata/running.yaml
+- healthStatus:
+    status: Degraded
+    message: Unable to find primary, backup aborted
+  inputPath: testdata/failed.yaml
+- healthStatus:
+    status: Healthy
+    message: Backup completed
+  inputPath: testdata/completed.yaml

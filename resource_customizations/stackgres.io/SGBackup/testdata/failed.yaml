@@ -1,0 +1,38 @@
+apiVersion: stackgres.io/v1
+kind: SGBackup
+metadata:
+  annotations:
+    stackgres.io/operatorVersion: 1.15.2
+  creationTimestamp: "2025-03-26T21:58:14Z"
+  generation: 9
+  name: tmp
+  namespace: infra-devl-stackgres
+  resourceVersion: "40817509"
+  uid: 17bce07c-8a6d-46cc-892e-2d052d83fa9d
+spec:
+  reconciliationTimeout: 300
+  sgCluster: infra-devl-stackgres-db
+status:
+  backupPath: sgbackups.stackgres.io/infra-devl-stackgres/infra-devl-stackgres-db/2025-03-26-20-49-09/14
+  process:
+    failure: Unable to find primary, backup aborted
+    jobPod: tmp-backup-s7gxs
+    status: Failed
+  sgBackupConfig:
+    baseBackups:
+      compression: brotli
+    storage:
+      s3Compatible:
+        awsCredentials:
+          secretKeySelectors:
+            accessKeyId:
+              key: AWS_ACCESS_KEY_ID
+              name: infra-devl-sgbackups
+            secretAccessKey:
+              key: AWS_SECRET_ACCESS_KEY
+              name: infra-devl-sgbackups
+        bucket: infra-devl-sgbackups
+        enablePathStyleAddressing: true
+        endpoint: https://objectstore3.redacted.nl
+        region: k8s
+      type: s3Compatible

@@ -1,0 +1,165 @@
+apiVersion: stackgres.io/v1
+kind: SGCluster
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+    meta.helm.sh/release-name: infra-devl-stackgres-db
+    meta.helm.sh/release-namespace: infra-devl-stackgres
+    stackgres.io/operatorVersion: 1.15.2
+  creationTimestamp: "2025-03-26T22:59:33Z"
+  generation: 22
+  labels:
+    app.kubernetes.io/instance: infra-devl-stackgres-db
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: na-stackgres-cluster
+    app.kubernetes.io/version: 1.15.2
+    helm.sh/chart: na-stackgres-cluster-1.15.2-4
+  name: infra-devl-stackgres-db
+  namespace: infra-devl-stackgres
+  resourceVersion: "40910270"
+  uid: 7723ad1d-12cf-4657-a785-affacc604c34
+spec:
+  configurations:
+    backups:
+    - compression: brotli
+      fastVolumeSnapshot: false
+      path: sgbackups.stackgres.io/infra-devl-stackgres/infra-devl-stackgres-db/2025-03-26-22-59-33/17
+      reconciliationTimeout: 300
+      retention: 8
+      sgObjectStorage: infra-devl-stackgres-db
+      useVolumeSnapshot: false
+    observability:
+      disableMetrics: false
+      prometheusAutobind: false
+    sgPoolingConfig: generated-from-default-1743029973693
+    sgPostgresConfig: postgres-17-generated-from-default-1743029973668
+  instances: 0
+  managedSql:
+    continueOnSGScriptError: false
+    scripts:
+    - id: 0
+      sgScript: infra-devl-stackgres-db-default
+    - id: 1
+      sgScript: infra-devl-stackgres-db
+  pods:
+    disableConnectionPooling: false
+    disableEnvoy: false
+    disableMetricsExporter: false
+    disablePostgresUtil: false
+    managementPolicy: OrderedReady
+    persistentVolume:
+      size: 7Gi
+  postgres:
+    extensions:
+    - name: pg_trgm
+      publisher: com.ongres
+      version: "1.6"
+    flavor: vanilla
+    ssl:
+      certificateSecretKeySelector:
+        key: tls.crt
+        name: infra-devl-stackgres-db-db-certs
+      enabled: true
+      privateKeySecretKeySelector:
+        key: tls.key
+        name: infra-devl-stackgres-db-db-certs
+    version: "17.4"
+  postgresServices:
+    primary:
+      enabled: true
+      type: ClusterIP
+    replicas:
+      enabled: true
+      type: ClusterIP
+  profile: production
+  prometheusAutobind: false
+  replication:
+    initialization:
+      backupNewerThan: PT23H
+      mode: FromExistingBackup
+    mode: strict-sync-all
+    role: ha-read
+    syncInstances: 3
+  sgInstanceProfile: infra-devl-stackgres-db-size-s
+  toInstallPostgresExtensions:
+  - build: "6.40"
+    name: pg_trgm
+    postgresVersion: "17.4"
+    publisher: com.ongres
+    repository: https://extensions.stackgres.io/postgres/repository
+    version: "1.6"
+status:
+  arch: x86_64
+  binding:
+    name: infra-devl-stackgres-db-binding
+  conditions:
+  - lastTransitionTime: "2025-03-26T22:59:36.059960Z"
+    reason: FalseFailed
+    status: "False"
+    type: Failed
+  - lastTransitionTime: "2025-03-26T22:59:36.070384Z"
+    reason: FalsePendingRestart
+    status: "False"
+    type: PendingRestart
+  - lastTransitionTime: "2025-03-26T22:59:36.070395Z"
+    reason: FalsePendingUpgrade
+    status: "False"
+    type: PendingUpgrade
+  instances: 3
+  labelSelector: stackgres.io/cluster-name=infra-devl-stackgres-db,app=StackGresCluster,stackgres.io/cluster-scope=infra-devl-stackgres-db,stackgres.io/cluster=true,stackgres.io/cluster-uid=7723ad1d-12cf-4657-a785-affacc604c34
+  managedSql:
+    scripts:
+    - completedAt: "2025-03-26T23:00:11.506263Z"
+      id: 0
+      scripts:
+      - id: 0
+        version: 0
+      - id: 4
+        version: 0
+      startedAt: "2025-03-26T22:59:54.184954Z"
+      updatedAt: "2025-03-26T23:00:09.947299Z"
+    - completedAt: "2025-03-26T23:00:11.793080Z"
+      id: 1
+      scripts:
+      - id: 0
+        version: 0
+      - id: 1
+        version: 0
+      - id: 2
+        version: 0
+      startedAt: "2025-03-26T23:00:11.547167Z"
+      updatedAt: "2025-03-26T23:00:11.758517Z"
+  os: linux
+  podStatuses:
+  - installedPostgresExtensions:
+    - build: "6.40"
+      name: pg_trgm
+      postgresVersion: "17.4"
+      publisher: com.ongres
+      repository: https://extensions.stackgres.io/postgres/repository
+      version: "1.6"
+    name: infra-devl-stackgres-db-0
+    pendingRestart: false
+    primary: true
+    replicationGroup: 0
+  - installedPostgresExtensions:
+    - build: "6.40"
+      name: pg_trgm
+      postgresVersion: "17.4"
+      publisher: com.ongres
+      repository: https://extensions.stackgres.io/postgres/repository
+      version: "1.6"
+    name: infra-devl-stackgres-db-1
+    pendingRestart: false
+    primary: false
+    replicationGroup: 0
+  - installedPostgresExtensions:
+    - build: "6.40"
+      name: pg_trgm
+      postgresVersion: "17.4"
+      publisher: com.ongres
+      repository: https://extensions.stackgres.io/postgres/repository
+      version: "1.6"
+    name: infra-devl-stackgres-db-2
+    pendingRestart: false
+    primary: false

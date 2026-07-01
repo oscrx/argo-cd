@@ -1,0 +1,37 @@
+apiVersion: stackgres.io/v1
+kind: SGBackup
+metadata:
+  annotations:
+    stackgres.io/operatorVersion: 1.15.2
+  creationTimestamp: "2025-03-26T21:45:11Z"
+  generation: 4
+  name: tmp
+  namespace: infra-devl-stackgres
+  resourceVersion: "40796112"
+  uid: 78e1d880-8864-4b6c-bc77-cddfa92eb4d4
+spec:
+  reconciliationTimeout: 300
+  sgCluster: infra-devl-stackgres-db
+status:
+  backupPath: sgbackups.stackgres.io/infra-devl-stackgres/infra-devl-stackgres-db/2025-03-26-20-49-09/14
+  process:
+    jobPod: tmp-backup-5t5wm
+    status: Running
+  sgBackupConfig:
+    baseBackups:
+      compression: brotli
+    storage:
+      s3Compatible:
+        awsCredentials:
+          secretKeySelectors:
+            accessKeyId:
+              key: AWS_ACCESS_KEY_ID
+              name: infra-devl-sgbackups
+            secretAccessKey:
+              key: AWS_SECRET_ACCESS_KEY
+              name: infra-devl-sgbackups
+        bucket: infra-devl-sgbackups
+        enablePathStyleAddressing: true
+        endpoint: https://objectstore3.redacted.nl
+        region: k8s
+      type: s3Compatible

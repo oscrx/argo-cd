@@ -1,0 +1,109 @@
+apiVersion: stackgres.io/v1
+kind: SGBackup
+metadata:
+  annotations:
+    stackgres.io/operatorVersion: 1.15.2
+  creationTimestamp: "2025-03-26T21:45:11Z"
+  generation: 6
+  name: tmp
+  namespace: infra-devl-stackgres
+  resourceVersion: "40796468"
+  uid: 78e1d880-8864-4b6c-bc77-cddfa92eb4d4
+spec:
+  reconciliationTimeout: 300
+  sgCluster: infra-devl-stackgres-db
+status:
+  backupInformation:
+    controlData:
+      Backup end location: 0/0
+      Backup start location: 0/0
+      Blocks per segment of large relation: "131072"
+      Bytes per WAL segment: "16777216"
+      Catalog version number: "202107181"
+      Data page checksum version: "1"
+      Database block size: "8192"
+      Database cluster state: in production
+      Database system identifier: "7486223201520263950"
+      Date/time type storage: 64-bit integers
+      End-of-backup record required: "no"
+      Fake LSN counter for unlogged rels: 0/3E8
+      Float8 argument passing: by value
+      Latest checkpoint location: 0/4000060
+      Latest checkpoint's NextMultiOffset: "0"
+      Latest checkpoint's NextMultiXactId: "1"
+      Latest checkpoint's NextOID: "24576"
+      Latest checkpoint's NextXID: 0:966
+      Latest checkpoint's PrevTimeLineID: "1"
+      Latest checkpoint's REDO WAL file: "000000010000000000000004"
+      Latest checkpoint's REDO location: 0/4000028
+      Latest checkpoint's TimeLineID: "1"
+      Latest checkpoint's full_page_writes: "on"
+      Latest checkpoint's newestCommitTsXid: "965"
+      Latest checkpoint's oldestActiveXID: "966"
+      Latest checkpoint's oldestCommitTsXid: "734"
+      Latest checkpoint's oldestMulti's DB: "1"
+      Latest checkpoint's oldestMultiXid: "1"
+      Latest checkpoint's oldestXID: "727"
+      Latest checkpoint's oldestXID's DB: "1"
+      Maximum columns in an index: "32"
+      Maximum data alignment: "8"
+      Maximum length of identifiers: "64"
+      Maximum size of a TOAST chunk: "1996"
+      Min recovery ending loc's timeline: "0"
+      Minimum recovery ending location: 0/0
+      Mock authentication nonce: dcf25d5bb0a81d7c4827475dee22d33f52eaa07684fa8cee9e7a66ca6d79bd36
+      Size of a large-object chunk: "2048"
+      Time of latest checkpoint: Wed 26 Mar 2025 09:45:15 PM UTC
+      WAL block size: "8192"
+      max_connections setting: "100"
+      max_locks_per_xact setting: "128"
+      max_prepared_xacts setting: "32"
+      max_wal_senders setting: "20"
+      max_worker_processes setting: "8"
+      pg_control last modified: Wed 26 Mar 2025 09:45:15 PM UTC
+      pg_control version number: "1300"
+      track_commit_timestamp setting: "on"
+      wal_level setting: logical
+      wal_log_hints setting: "on"
+    hostname: infra-devl-stackgres-db-0
+    lsn:
+      end: "67109120"
+      start: "67108904"
+    pgData: /var/lib/postgresql/data
+    postgresVersion: "140017"
+    size:
+      compressed: 3942310
+      uncompressed: 35525611
+    sourcePod: infra-devl-stackgres-db-0
+    startWalFile: "000000010000000000000004"
+    systemIdentifier: "7486223201520263950"
+    timeline: "1"
+  backupPath: sgbackups.stackgres.io/infra-devl-stackgres/infra-devl-stackgres-db/2025-03-26-20-49-09/14
+  internalName: base_000000010000000000000004
+  process:
+    failure: ""
+    jobPod: tmp-backup-5t5wm
+    managedLifecycle: true
+    status: Completed
+    timing:
+      end: "2025-03-26T21:45:17.121645Z"
+      start: "2025-03-26T21:45:15.221528Z"
+      stored: "2025-03-26T21:45:17.242Z"
+  sgBackupConfig:
+    baseBackups:
+      compression: brotli
+    storage:
+      s3Compatible:
+        awsCredentials:
+          secretKeySelectors:
+            accessKeyId:
+              key: AWS_ACCESS_KEY_ID
+              name: infra-devl-sgbackups
+            secretAccessKey:
+              key: AWS_SECRET_ACCESS_KEY
+              name: infra-devl-sgbackups
+        bucket: infra-devl-sgbackups
+        enablePathStyleAddressing: true
+        endpoint: https://objectstore3.redacted.nl
+        region: k8s
+      type: s3Compatible

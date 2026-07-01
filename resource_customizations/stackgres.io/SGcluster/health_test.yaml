@@ -1,0 +1,21 @@
+tests:
+- healthStatus:
+    status: Progressing
+    message: Unknown status
+  inputPath: testdata/fresh.yaml
+- healthStatus:
+    status: Healthy
+    message: No errors reported
+  inputPath: testdata/no_errors.yaml
+- healthStatus:
+    status: Progressing
+    message: No errors reported
+  inputPath: testdata/pending_restart.yaml
+- healthStatus:
+    status: Progressing
+    message: No errors reported
+  inputPath: testdata/pending_upgrade.yaml
+- healthStatus:
+    status: Progressing
+    message: No errors reported
+  inputPath: testdata/failed.yaml

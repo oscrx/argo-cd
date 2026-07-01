@@ -1,0 +1,28 @@
+apiVersion: stackgres.io/v1
+kind: SGCluster
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+    meta.helm.sh/release-name: infra-devl-stackgres-db
+    meta.helm.sh/release-namespace: infra-devl-stackgres
+    stackgres.io/operatorVersion: 1.15.2
+  creationTimestamp: "2025-03-26T22:59:33Z"
+  generation: 1
+  labels:
+    app.kubernetes.io/instance: infra-devl-stackgres-db
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: na-stackgres-cluster
+    app.kubernetes.io/version: 1.15.2
+    helm.sh/chart: na-stackgres-cluster-1.15.2-4
+  name: infra-devl-stackgres-db
+  namespace: infra-devl-stackgres
+  resourceVersion: "40904544"
+  uid: 7723ad1d-12cf-4657-a785-affacc604c34
+spec:
+  instances: 3
+  pods:
+    persistentVolume:
+      size: 7Gi
+  postgres:
+    version: "17.4"
+  sgInstanceProfile: infra-devl-stackgres-db-size-s
