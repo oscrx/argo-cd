@@ -56,6 +56,7 @@ interface ApplicationDetailsState {
 interface FilterInput {
     name: string[];
     kind: string[];
+    kindNot: string[];
     health: string[];
     sync: string[];
     namespace: string[];
@@ -1450,6 +1451,7 @@ Are you sure you want to disable auto-sync and rollback application '${props.mat
             if (
                 (filterInput.name.length === 0 || nodeNameMatchesWildcardFilters(node.name, filterInput.name)) &&
                 (filterInput.kind.length === 0 || filterInput.kind.indexOf(node.kind) > -1) &&
+                (filterInput.kindNot.length === 0 || filterInput.kindNot.indexOf(node.kind) === -1) &&
                 // include if node's root sync matches filter
                 (syncStatuses.length === 0 || hook || (root.status && syncStatuses.indexOf(root.status) > -1)) &&
                 // include if node or node's root health matches filter
@@ -1549,6 +1551,7 @@ Are you sure you want to disable auto-sync and rollback application '${props.mat
     const getTreeFilter = useCallback((filterInput: string[]): FilterInput => {
         const name = new Array<string>();
         const kind = new Array<string>();
+        const kindNot = new Array<string>();
         const health = new Array<string>();
         const sync = new Array<string>();
         const namespace = new Array<string>();
@@ -1561,6 +1564,9 @@ Are you sure you want to disable auto-sync and rollback application '${props.mat
                 case 'kind':
                     kind.push(val);
                     break;
+                case 'kind!':
+                    kindNot.push(val);
+                    break;
                 case 'health':
                     health.push(val);
                     break;
@@ -1572,7 +1578,7 @@ Are you sure you want to disable auto-sync and rollback application '${props.mat
                     break;
             }
         }
-        return {kind, health, sync, namespace, name};
+        return {kind, kindNot, health, sync, namespace, name};
     }, []);
 
     // Return the render function

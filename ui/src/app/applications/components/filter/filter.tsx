@@ -17,6 +17,10 @@ interface FilterProps {
     loading?: boolean;
     radio?: boolean;
     collapsed?: boolean;
+    // titleAppend is rendered in the filter header, between the label and the clear/collapse controls.
+    titleAppend?: React.ReactNode;
+    // selectedModifierClass is applied to selected option rows in addition to filter__item--selected.
+    selectedModifierClass?: string;
 }
 
 export interface CheckboxOption {
@@ -25,7 +29,7 @@ export interface CheckboxOption {
     icon?: React.ReactNode;
 }
 
-export const CheckboxRow = (props: {value: boolean; onChange?: (value: boolean) => void; option: CheckboxOption}) => {
+export const CheckboxRow = (props: {value: boolean; onChange?: (value: boolean) => void; option: CheckboxOption; selectedModifierClass?: string}) => {
     const [value, setValue] = React.useState(props.value);
 
     React.useEffect(() => {
@@ -44,7 +48,9 @@ export const CheckboxRow = (props: {value: boolean; onChange?: (value: boolean) 
     };
 
     return (
-        <div className={`filter__item ${value ? 'filter__item--selected' : ''}`} onClick={() => setValue(!value)}>
+        <div
+            className={`filter__item ${value ? 'filter__item--selected' : ''} ${value && props.selectedModifierClass ? props.selectedModifierClass : ''}`}
+            onClick={() => setValue(!value)}>
             <Checkbox
                 onChange={val => {
                     setValue(val);
@@ -151,6 +157,7 @@ export const Filter = (props: FilterProps) => {
                 <span className='filter__header__label' title={props.label || 'FILTER'}>
                     {props.label || 'FILTER'}
                 </span>
+                {props.titleAppend}
                 {(props.selected || []).length > 0 || (props.field && Object.keys(values).length > 0) ? (
                     <button
                         className='argo-button argo-button--base argo-button--sm argo-button--right'
@@ -198,6 +205,7 @@ export const Filter = (props: FilterProps) => {
                                     setValues(update);
                                 }}
                                 option={opt}
+                                selectedModifierClass={props.selectedModifierClass}
                             />
                         ))}
                     </React.Fragment>
